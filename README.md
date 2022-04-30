@@ -8,7 +8,7 @@
 - ⚙️ VSCode extensions
 - 🎨 ESLint + Prettier
 - 💚 CI setup using GitHub Actions:
-  - ✅ E2E testing with [Playwright](https://playwright.dev/)
+  - ✅ Build
   - ✅ Linting
 - 🔐 Validates your env vars on build and start
 

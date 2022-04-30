@@ -1,4 +1,4 @@
-name: E2E-testing
+name: Main workflow
 on: [push]
 jobs:
   e2e:
