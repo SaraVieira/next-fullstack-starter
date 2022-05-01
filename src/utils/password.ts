@@ -1,7 +1,10 @@
 import { hash, compare } from 'bcryptjs';
 
 export async function hashPassword(password: string) {
-  const hashedPassword = await hash(password, 12);
+  const hashedPassword = await hash(
+    password,
+    Number(process.env.NEXTAUTH_SECRET as string),
+  );
   return hashedPassword;
 }
 

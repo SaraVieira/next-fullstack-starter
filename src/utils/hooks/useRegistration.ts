@@ -1,6 +1,7 @@
 import { signIn } from 'next-auth/react';
 import create, { GetState, SetState } from 'zustand';
 import { ERROR_MESSAGES } from '../constants/errors';
+import { STATES } from '../constants/signin-states';
 
 type useSignInState = {
   error: string;
@@ -93,7 +94,7 @@ export const useSignup = create(
         return;
       }
       try {
-        const data = await fetch('/api/signup', {
+        const data = await fetch('/api/auth/signup', {
           method: 'POST',
           body: JSON.stringify({
             email,
@@ -103,13 +104,78 @@ export const useSignup = create(
 
         if (!data.ok) {
           set({ error: data.message || 'Something went wrong!' });
+        } else {
+          await signIn('credentials', {
+            redirect: false,
+            email,
+            password,
+          });
+          router.push('/');
         }
-        await signIn('credentials', {
-          redirect: false,
-          email,
-          password,
-        });
-        router.push('/');
+      } catch {
+      } finally {
+        set({ loading: false });
+      }
+    },
+  }),
+);
+
+type useResetPasswordState = {
+  error: string;
+  password: string;
+  repeatPassword: string;
+  loading: boolean;
+  updatePassword: (e: any, router: any) => void;
+  setPassword: (password: string) => void;
+  setRepeatPassword: (password: string) => void;
+  isFilledIn: () => boolean;
+};
+
+export const useResetPassword = create(
+  (
+    set: SetState<useResetPasswordState>,
+    get: GetState<useResetPasswordState>,
+  ) => ({
+    error: '',
+    password: '',
+    repeatPassword: '',
+    loading: false,
+    isFilledIn: (): boolean => {
+      const { password, repeatPassword } = get();
+
+      return Boolean(password && repeatPassword);
+    },
+    setPassword: (password: string) => set({ password }),
+    setRepeatPassword: (repeatPassword: string) => set({ repeatPassword }),
+    updatePassword: async (e: any, router: any) => {
+      const { password, repeatPassword } = get();
+      set({ error: '', loading: true });
+      e.preventDefault();
+
+      if (password.length < 6) {
+        set({ error: ERROR_MESSAGES.SHORT_PASSWORD, loading: false });
+        return;
+      }
+
+      if (password !== repeatPassword) {
+        set({ error: ERROR_MESSAGES.PASSWORD_NOT_MATCH, loading: false });
+        return;
+      }
+
+      try {
+        const data = await fetch('/api/auth/reset-password', {
+          method: 'PUT',
+          body: JSON.stringify({
+            ...router.query,
+            password,
+          }),
+        }).then((rsp) => rsp.json());
+
+        if (!data.ok) {
+          set({ error: data.message || 'Something went wrong!' });
+        } else {
+          router.push('/signin?state=' + STATES.PASSWORD_UPDATED);
+        }
       } catch {
       } finally {
         set({ loading: false });

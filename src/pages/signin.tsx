@@ -7,6 +7,8 @@ import { XCircleIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useSignIn } from '~/utils/hooks/useRegistration';
 import { redirectIfAuthenticated } from '~/utils/session';
+import Feedback from '~/components/Feedback';
+import { STATES } from '~/utils/constants/signin-states';
 
 function SignIn() {
   const { isFilledIn, setPassword, setEmail, error, signIn, signingIn } =
@@ -20,6 +22,12 @@ function SignIn() {
         className="max-w-[500px] m-auto p-15"
       >
         <h2 className="text-center pb-8 font-bold text-3xl">Sign In</h2>
+        {router.query.state === STATES.PASSWORD_UPDATED ? (
+          <Feedback
+            variant="warning"
+            message="Please sign in with your new password"
+          />
+        ) : null}
         <div className="mb-6">
           <Label htmlFor="email">Your Email</Label>
           <Input
@@ -37,21 +45,8 @@ function SignIn() {
             required
             onChange={(e) => setPassword(e.target.value)}
           />
-          {error && (
-            <div className="rounded-md bg-red-50 p-4 my-4">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <XCircleIcon
-                    className="h-5 w-5 text-red-400"
-                    aria-hidden="true"
-                  />
-                </div>
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-red-800">{error}</h3>
-                </div>
-              </div>
-            </div>
-          )}
+
+          {error && <Feedback variant="error" message={error} />}
         </div>
 
         <Button disabled={!isFilledIn()} type="submit" loading={signingIn}>
@@ -59,9 +54,12 @@ function SignIn() {
         </Button>
       </form>
 
-      <Link href="/signup">
-        <a className="block mt-6 text-center text-opacity-50 hover:text-opacity-100 text-white disabled:opacity-50">
-          Sign Up
+      <Button variant="secondary" className="mt-6" href="/signup">
+        Sign Up
+      </Button>
+      <Link href="/forgot-password">
+        <a className="block mt-2 text-center text-opacity-50 hover:text-opacity-100 text-white disabled:opacity-50">
+          Forgot your password
         </a>
       </Link>
     </>
