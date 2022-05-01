@@ -7,18 +7,18 @@ const IndexPage = () => {
   return (
     <>
       <h2 className="text-center pb-8 font-bold text-3xl">
-        Welcome to starter!
+        Welcome to the next full stack starter!
       </h2>
 
-      <h2 className="text-xl font-bold py-4">
+      <h3 className="text-xl font-bold py-4">
         Posts
         {posts.isLoading && '(loading)'}
-      </h2>
+      </h3>
       {posts.data?.map((item) => (
-        <article key={item.id} className="my-2">
-          <h3 className="font-bold">{item.title}</h3>
+        <article key={item.id} className="my-4">
+          <h3 className="font-bold text-lg">{item.title}</h3>
           <Link href={`/post/${item.id}`}>
-            <a className="underline">Read more</a>
+            <a className="underline">Read more {'->'} </a>
           </Link>
         </article>
       ))}

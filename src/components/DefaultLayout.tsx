@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -19,9 +19,14 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
               </Link>
             </li>
             {session?.user ? (
-              <Link href="/create-post">
-                <a className="underline">Create Post</a>
-              </Link>
+              <>
+                <Link href="/create-post">
+                  <a className="underline">Create Post</a>
+                </Link>
+                <button onClick={() => signOut()} className="underline">
+                  Sign out
+                </button>
+              </>
             ) : (
               <Link href="/signin">
                 <a className="underline">Sign In</a>
