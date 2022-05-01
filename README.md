@@ -28,13 +28,32 @@ A starter for NextJS fullstack projects with all you need to start your side pro
 - Sign up
 - Request a new password
 - Change Password
--
 
 ### Screenshots
 
 <details>
 <summary>Post list</summary>
 <img src="/docs/list.png" alt="post list" />
+</details>
+<details>
+<summary>Single post</summary>
+<img src="/docs/single-post.png" alt="single post" />
+</details>
+<details>
+<summary>Create post</summary>
+<img src="/docs/create-post.png" alt="create post" />
+</details>
+<details>
+<summary>Signin</summary>
+<img src="/docs/sign-in.png" alt="signin" />
+</details>
+<details>
+<summary>Signup</summary>
+<img src="/docs/sign-up.png" alt="signup" />
+</details>
+<details>
+<summary>Request password</summary>
+<img src="/docs/request-password.png" alt="request password" />
 </details>
 
 ## Development
