@@ -4,20 +4,20 @@ A starter for NextJS fullstack projects with all you need to start your side pro
 
 ## Features
 
-- ⚡ API using [tRPC](https://trpc.io)
-- ⚡ Database with [Prisma](https://www.prisma.io/) & Postgres
-- ⚙️ Auth with [NextAuth](https://next-auth.js.org/)
-- Credentials setup for Email and Password
+- 📡 API using [tRPC](https://trpc.io)
+- 📦 Database with [Prisma](https://www.prisma.io/) & Postgres
+- 🔒 Auth with [NextAuth](https://next-auth.js.org/)
+  - Credentials setup for Email and Password
   - Forgot Password email and template
-- Blog example
+- 📰 Blog example
   - Create post
   - Show all posts
   - Protected routes
   - Protected API routes
 - 🎨 ESLint + Prettier + [Lint Staged](https://github.com/okonet/lint-staged)
 - 💚 CI setup using GitHub Actions:
-  - ✅ Build
-  - ✅ Linting
+  - Build
+  - Linting
 
 ## Pages
 
