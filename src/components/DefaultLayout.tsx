@@ -23,7 +23,15 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 <Link href="/create-post">
                   <a className="underline">Create Post</a>
                 </Link>
-                <button onClick={() => signOut()} className="underline">
+                <button
+                  onClick={() =>
+                    signOut({
+                      redirect: true,
+                      callbackUrl: '/',
+                    })
+                  }
+                  className="underline"
+                >
                   Sign out
                 </button>
               </>

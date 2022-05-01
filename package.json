@@ -80,5 +80,6 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": "eslint --cache --fix"
-  }
+  },
+  "license": "MIT"
 }

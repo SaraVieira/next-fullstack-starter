@@ -60,10 +60,6 @@ export default NextAuth({
       },
     }),
   ],
-  pages: {
-    signIn: '/auth',
-    newUser: '/auth',
-  },
   session: {
     // Choose how you want to save the user session.
     // The default is `"jwt"`, an encrypted JWT (JWE) in the session cookie.
