@@ -34,7 +34,7 @@ A starter for NextJS fullstack projects with all you need to start your side pro
 
 <details>
 <summary>Post list</summary>
-![Post List](/docs/list.png)
+<img src="/docs/list.png" alt="post list" />
 </details>
 
 ## Development
