@@ -1,20 +1,9 @@
-import NextError from 'next/error';
 import { useRouter } from 'next/router';
-import { NextPageWithLayout } from '~/pages/_app';
 import { usePost } from '~/utils/hooks/usePosts';
 
-const PostViewPage: NextPageWithLayout = () => {
+const PostViewPage = () => {
   const id = useRouter().query.id as string;
-  const { error, isLoading, data: post } = usePost({ id });
-
-  if (error) {
-    return (
-      <NextError
-        title={error.message}
-        statusCode={error.data?.httpStatus ?? 500}
-      />
-    );
-  }
+  const { isLoading, data: post } = usePost({ id });
 
   if (isLoading) {
     return <>Loading...</>;

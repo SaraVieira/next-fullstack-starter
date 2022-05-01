@@ -1,8 +1,7 @@
-import { NextPageWithLayout } from './_app';
 import Link from 'next/link';
 import { usePosts } from '~/utils/hooks/usePosts';
 
-const IndexPage: NextPageWithLayout = () => {
+const IndexPage = () => {
   const posts = usePosts();
 
   return (
