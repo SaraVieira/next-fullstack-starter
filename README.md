@@ -6,6 +6,7 @@ A starter for NextJS fullstack projects with all you need to start your side pro
 
 - 📡 API using [tRPC](https://trpc.io)
 - 📦 Database with [Prisma](https://www.prisma.io/) & Postgres
+- 🐻 [Tailwind](https://tailwindcss.com/)
 - 🔒 Auth with [NextAuth](https://next-auth.js.org/)
   - Credentials setup for Email and Password
   - Forgot Password email and template
