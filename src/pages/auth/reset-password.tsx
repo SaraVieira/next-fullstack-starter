@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Button } from '~/components/Button';
-import Feedback from '~/components/Feedback';
+import { Feedback } from '~/components/Feedback';
 import { Input } from '~/components/Form';
 import { useResetPassword } from '~/utils/hooks/useRegistration';
 

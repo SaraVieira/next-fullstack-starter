@@ -2,11 +2,12 @@
 
 ## Features
 
-- 🧙‍♂️ E2E typesafety with [tRPC](https://trpc.io)
-- ⚡ Full-stack React with Next.js
+- ⚡ API using [tRPC](https://trpc.io)
 - ⚡ Database with Prisma
-- ⚙️ VSCode extensions
-- 🎨 ESLint + Prettier
+- ⚙️ Auth with NextAuth
+  - Credentials setup for Email and Password
+  - Forgot Password
+- 🎨 ESLint + Prettier + Lint Staged
 - 💚 CI setup using GitHub Actions:
   - ✅ Build
   - ✅ Linting

@@ -6,7 +6,7 @@ import { Button } from '~/components/Button';
 import Link from 'next/link';
 import { useSignIn } from '~/utils/hooks/useRegistration';
 import { redirectIfAuthenticated } from '~/utils/session';
-import Feedback from '~/components/Feedback';
+import { Feedback } from '~/components/Feedback';
 import { STATES } from '~/utils/constants/signin-states';
 
 function SignIn() {

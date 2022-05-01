@@ -16,7 +16,8 @@
     "lint": "eslint src",
     "lint-fix": "yarn lint --fix",
     "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "prepare": "husky install"
   },
   "prisma": {
     "seed": "yarn ts-node prisma/seed.ts"
@@ -66,6 +67,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
+    "husky": ">=6",
+    "lint-staged": ">=10",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
     "prisma": "^3.13.0",
@@ -74,5 +77,8 @@
   },
   "publishConfig": {
     "access": "restricted"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": "eslint --cache --fix"
   }
 }

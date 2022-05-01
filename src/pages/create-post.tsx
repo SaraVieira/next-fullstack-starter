@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Button } from '~/components/Button';
-import Feedback from '~/components/Feedback';
+import { Feedback } from '~/components/Feedback';
 import { Input, Textarea } from '~/components/Form';
 import { useCreatePost } from '~/utils/hooks/usePosts';
 import { validateUserSession } from '~/utils/session';

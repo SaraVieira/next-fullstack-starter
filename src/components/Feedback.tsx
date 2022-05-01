@@ -54,5 +54,3 @@ export const Feedback = ({ message, variant = 'success' }: Props) => {
     </div>
   );
 };
-
-export default Feedback;
