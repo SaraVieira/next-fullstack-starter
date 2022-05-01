@@ -9,21 +9,27 @@ export const Label = ({ children, ...props }) => (
 // eslint-disable-next-line react/display-name
 export const Input = forwardRef(
   (props: any, ref): ReactElement => (
-    <input
-      className="bg-slate-600 rounded-md w-full border-0"
-      ref={ref}
-      {...props}
-    />
+    <>
+      <Label htmlFor={props.name || props.id}>{props.label}</Label>
+      <input
+        className="bg-slate-600 rounded-md w-full border-0"
+        ref={ref}
+        {...props}
+      />
+    </>
   ),
 );
 
 // eslint-disable-next-line react/display-name
 export const Textarea = forwardRef(
   (props: any, ref): ReactElement => (
-    <textarea
-      className="bg-slate-600 rounded-md w-full border-0"
-      ref={ref}
-      {...props}
-    />
+    <>
+      <Label htmlFor={props.name || props.id}>{props.label}</Label>
+      <textarea
+        className="bg-slate-600 rounded-md w-full border-0"
+        ref={ref}
+        {...props}
+      />
+    </>
   ),
 );

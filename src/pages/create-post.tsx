@@ -1,8 +1,8 @@
-import { XCircleIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Button } from '~/components/Button';
-import { Input, Label, Textarea } from '~/components/Form';
+import Feedback from '~/components/Feedback';
+import { Input, Textarea } from '~/components/Form';
 import { useCreatePost } from '~/utils/hooks/usePosts';
 import { validateUserSession } from '~/utils/session';
 
@@ -25,8 +25,8 @@ const CreatePostPage = () => {
   return (
     <form onSubmit={createPost} className="max-w-md m-auto flex flex-col gap-4">
       <div>
-        <Label htmlFor="title">Title</Label>
         <Input
+          label="Title"
           id="title"
           name="title"
           type="text"
@@ -38,8 +38,8 @@ const CreatePostPage = () => {
         />
       </div>
       <div>
-        <Label htmlFor="text">Text</Label>
         <Textarea
+          label="Content"
           id="text"
           name="text"
           disabled={addPost.isLoading}
@@ -54,21 +54,7 @@ const CreatePostPage = () => {
         Submit
       </Button>
       {addPost.error && (
-        <div className="rounded-md bg-red-50 p-4 mb-4">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <XCircleIcon
-                className="h-5 w-5 text-red-400"
-                aria-hidden="true"
-              />
-            </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">
-                {addPost.error.message}
-              </h3>
-            </div>
-          </div>
-        </div>
+        <Feedback variant="error" message={addPost.error.message} />
       )}
     </form>
   );

@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
 
-import { Input, Label } from '~/components/Form';
+import { Input } from '~/components/Form';
 
 import { Button } from '~/components/Button';
-import { XCircleIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useSignIn } from '~/utils/hooks/useRegistration';
 import { redirectIfAuthenticated } from '~/utils/session';
@@ -29,8 +28,8 @@ function SignIn() {
           />
         ) : null}
         <div className="mb-6">
-          <Label htmlFor="email">Your Email</Label>
           <Input
+            label="Your Email"
             type="email"
             id="email"
             required
@@ -38,8 +37,8 @@ function SignIn() {
           />
         </div>
         <div className="mb-12">
-          <Label htmlFor="password">Your Password</Label>
           <Input
+            label="Your Password"
             type="password"
             id="password"
             required
@@ -54,10 +53,10 @@ function SignIn() {
         </Button>
       </form>
 
-      <Button variant="secondary" className="mt-6" href="/signup">
+      <Button variant="secondary" className="mt-6" href="/auth/signup">
         Sign Up
       </Button>
-      <Link href="/forgot-password">
+      <Link href="/auth/forgot-password">
         <a className="block mt-2 text-center text-opacity-50 hover:text-opacity-100 text-white disabled:opacity-50">
           Forgot your password
         </a>

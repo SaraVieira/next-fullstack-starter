@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '~/components/Button';
 import { Feedback } from '~/components/Feedback';
-import { Input, Label } from '~/components/Form';
+import { Input } from '~/components/Form';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
@@ -42,8 +42,8 @@ const ResetPassword = () => {
         </h2>
 
         <div className="mb-12">
-          <Label htmlFor="email">Email</Label>
           <Input
+            label="Email"
             id="email"
             placeholder="your email"
             required

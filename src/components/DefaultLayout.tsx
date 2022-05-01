@@ -28,7 +28,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 </button>
               </>
             ) : (
-              <Link href="/signin">
+              <Link href="/auth/signin">
                 <a className="underline">Sign In</a>
               </Link>
             )}
