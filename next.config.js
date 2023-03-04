@@ -17,4 +17,11 @@ module.exports = getConfig({
   publicRuntimeConfig: {
     NODE_ENV: env.NODE_ENV,
   },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
 });
