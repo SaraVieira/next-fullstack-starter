@@ -1,7 +1,7 @@
 name: Main workflow
 on: [push]
 jobs:
-  e2e:
+  all:
     env:
       DATABASE_URL: postgresql://postgres:@localhost:5432/trpcdb
       NODE_ENV: test
