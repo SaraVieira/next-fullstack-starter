@@ -1,14 +1,10 @@
-import { createRouter } from '../createRouter';
+import { publicProcedure, router } from '../trpc';
 import { postRouter } from './post';
-import superjson from 'superjson';
 
-export const appRouter = createRouter()
-  .transformer(superjson)
-  .query('healthz', {
-    async resolve() {
-      return 'yay!';
-    },
-  })
-  .merge('post.', postRouter);
+export const appRouter = router({
+  healthcheck: publicProcedure.query(() => 'yay!'),
+
+  post: postRouter,
+});
 
 export type AppRouter = typeof appRouter;
