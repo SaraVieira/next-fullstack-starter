@@ -23,8 +23,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      # - name: Install deps and build (with cache)
-      #   uses: bahmutov/npm-install@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
       - run: yarn install
 
       - name: Next.js cache
