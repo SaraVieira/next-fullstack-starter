@@ -1,8 +1,8 @@
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { createRouter } from '~/server/createRouter';
 import { prisma } from '~/server/prisma';
+import { publicProcedure, router } from '../trpc';
 
 const defaultPostSelect = Prisma.validator<Prisma.PostSelect>()({
   id: true,
@@ -12,58 +12,102 @@ const defaultPostSelect = Prisma.validator<Prisma.PostSelect>()({
   updatedAt: true,
 });
 
-export const postRouter = createRouter()
-  // create
-  .mutation('add', {
-    input: z.object({
-      id: z.string().uuid().optional(),
-      title: z.string().min(1).max(32),
-      text: z.string().min(1),
-    }),
-    async resolve({ input, ctx }) {
-      if (!ctx?.user) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: `You need to be logged in to create a post`,
+type Context = {
+  user?: {
+    id: string;
+  };
+};
+
+export const postRouter = router({
+  add: publicProcedure
+    .input(
+      z.object({
+        id: z.string().uuid().optional(),
+        title: z.string().min(1).max(32),
+        text: z.string().min(1),
+      }),
+    )
+    .mutation(
+      async ({
+        input,
+        ctx,
+      }: {
+        ctx: Context;
+        input: {
+          id: string;
+          title: string;
+          text: string;
+        };
+      }) => {
+        if (!ctx?.user) {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: `You need to be logged in to create a post`,
+          });
+        }
+        const post = await prisma.post.create({
+          data: { ...input, userId: ctx.user.id },
+          select: defaultPostSelect,
         });
-      }
-      const post = await prisma.post.create({
-        data: {
-          ...input,
-          userId: ctx.user.id,
-        },
-        select: defaultPostSelect,
-      });
-      return post;
-    },
-  })
-  // read
-  .query('all', {
-    async resolve() {
+        return post;
+      },
+    ),
+  all: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      }),
+    )
+    .query(async ({ input }) => {
       /**
-       * For pagination you can have a look at this docs site
-       * @link https://trpc.io/docs/useInfiniteQuery
+       * For pagination docs you can have a look here
+       * @see https://trpc.io/docs/useInfiniteQuery
+       * @see https://www.prisma.io/docs/concepts/components/prisma-client/pagination
        */
 
-      return prisma.post.findMany({
+      const limit = input.limit ?? 50;
+      const { cursor } = input;
+
+      const items = await prisma.post.findMany({
         select: defaultPostSelect,
+        // get an extra item at the end which we'll use as next cursor
+        take: limit + 1,
+        where: {},
+        cursor: cursor
+          ? {
+              id: cursor,
+            }
+          : undefined,
+        orderBy: {
+          createdAt: 'desc',
+        },
       });
-    },
-  })
-  .query('byId', {
-    input: z.object({
-      id: z.string(),
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        // Remove the last item and use it as next cursor
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const nextItem = items.pop()!;
+        nextCursor = nextItem.id;
+      }
+
+      return {
+        items: items.reverse(),
+        nextCursor,
+      };
     }),
-    async resolve({ input }) {
+  byId: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
       const { id } = input;
       const post = await prisma.post.findUnique({
         where: { id },
-        select: {
-          ...defaultPostSelect,
-          User: {
-            select: { email: true },
-          },
-        },
+        select: defaultPostSelect,
       });
       if (!post) {
         throw new TRPCError({
@@ -72,37 +116,5 @@ export const postRouter = createRouter()
         });
       }
       return post;
-    },
-  })
-  // update
-  .mutation('edit', {
-    input: z.object({
-      id: z.string().uuid(),
-      data: z.object({
-        title: z.string().min(1).max(32).optional(),
-        text: z.string().min(1).optional(),
-      }),
     }),
-    async resolve({ input }) {
-      const { id, data } = input;
-      const post = await prisma.post.update({
-        where: { id },
-        data,
-        select: defaultPostSelect,
-      });
-      return post;
-    },
-  })
-  // delete
-  .mutation('delete', {
-    input: z.object({
-      id: z.string(),
-    }),
-    async resolve({ input }) {
-      const { id } = input;
-      await prisma.post.delete({ where: { id } });
-      return {
-        id,
-      };
-    },
-  });
+});

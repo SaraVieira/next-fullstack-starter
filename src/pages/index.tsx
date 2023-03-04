@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { Fragment } from 'react';
 import { usePosts } from '~/utils/hooks/usePosts';
 
 const IndexPage = () => {
   const posts = usePosts();
+  posts.data?.pages;
 
   return (
     <>
@@ -14,13 +16,17 @@ const IndexPage = () => {
         Posts
         {posts.isLoading && '(loading)'}
       </h3>
-      {posts.data?.map((item) => (
-        <article key={item.id} className="my-4">
-          <h3 className="font-bold text-lg">{item.title}</h3>
-          <Link href={`/post/${item.id}`}>
-            <a className="underline">Read more {'->'} </a>
-          </Link>
-        </article>
+      {posts.data?.pages.map((page, index) => (
+        <Fragment key={page.items[0]?.id || index}>
+          {page.items.map((item) => (
+            <article key={item.id} className="my-4">
+              <h3 className="font-bold text-lg">{item.title}</h3>
+              <Link href={`/post/${item.id}`}>
+                <a className="underline">Read more {'->'} </a>
+              </Link>
+            </article>
+          ))}
+        </Fragment>
       ))}
     </>
   );
